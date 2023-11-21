@@ -1,14 +1,21 @@
-const mime = require('mime');
 
-// Configura o tipo MIME correto para o arquivo script.js
-mime.define({
-  'application/javascript': ['js']
-});
-
-alert('Está puxando o script.js');
-
+// Obtenha os botões
 const btnHaiti = document.querySelector('#btnHaiti');
+if (btnHaiti) {
+  btnHaiti.addEventListener('click', goToHaiti);
+}
 
-btnHaiti.addEventListener('click', function() {
-  alert('Haitiano');
-});
+const btnVenezolano = document.querySelector('#btnVenezolano');
+
+// Defina as funções que serão executadas quando os botões forem clicados
+function goToHaiti() {
+  window.location.href = 'https://pt.wikipedia.org/wiki/Haiti';
+}
+
+function goToVenezolano() {
+  window.location.href = 'https://pt.wikipedia.org/wiki/Venezuela';
+}
+
+// Adicione os eventos onclick aos botões
+btnHaiti.addEventListener('click', goToHaiti);
+btnVenezolano.addEventListener('click', goToVenezolano);

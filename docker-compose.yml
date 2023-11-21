@@ -1,0 +1,12 @@
+version: '3.1'
+
+services:
+  mysql-db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: ImigrantesDados
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 4321
+    ports:
+      - "3306"
