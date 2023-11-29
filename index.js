@@ -16,11 +16,14 @@ app.use('/styles', (req, res, next) => {
   }, express.static(path.join(__dirname, 'styles')));
 app.use('/css', express.static(path.join(__dirname,'styles/css')))
 
+// Configurar rota para arquivos JavaScript no diretório 'scripts'
 app.use('/scripts', (req, res, next) => {
-    res.header('Content-Type', 'text/js');
+    res.header('Content-Type', 'application/javascript'); // Corrigido para 'application/javascript'
     next();
   }, express.static(path.join(__dirname, 'scripts')));
-app.use('/js', express.static(path.join(__dirname,'scripts/js')))
+  
+  // Configurar rota para arquivos JavaScript no diretório 'scripts/js'
+  app.use('/js', express.static(path.join(__dirname, 'scripts/js')));
 
 const phpExpress = require('php-express')();
 // Configuração do PHP
@@ -64,6 +67,9 @@ router.get('/',function(req,res){
     router.get('/VenezuelaFinal2',function(req,res){
         res.sendFile(path.join(__dirname+'/venezuela\\apVenezuela\\venezuelaDocValido\\venezuelaFinal2.html'));
     })
+    router.get('/VenezuelaFinal3',function(req,res){
+        res.sendFile(path.join(__dirname+'/venezuela\\arVenezuela\\venezuelaFinal3.html'));
+    })
     
     
 // FIM VENEZUELA
@@ -77,6 +83,14 @@ router.get('/',function(req,res){
     })
 // FIM HAITI
 
+//documento
+router.get('/Doc',function(req,res){
+    res.sendFile(path.join(__dirname+'/documento\\documento.html'));
+})
+router.get('/Doc2',function(req,res){
+    res.sendFile(path.join(__dirname+'/documento\\documento2.html'));
+})
+//fim documento
 
 router.get('/sobre',function(req,res){
     res.sendFile(path.join(__dirname+'/sobre.html'));
@@ -85,11 +99,11 @@ router.get('/sobre',function(req,res){
 
 app.use('/', router);
 
-
+/*
 // Conectando ao banco de dados (arquivo conectando.js)
 const conectando = require('./scripts/conectando.js');
 conectando.conectar();
-
+*/
 
 
 app.listen(process.env.port || 3000);
