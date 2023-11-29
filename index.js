@@ -81,6 +81,27 @@ router.get('/',function(req,res){
     router.get('/HaitiValidadeCRNM',function(req,res){
         res.sendFile(path.join(__dirname+'/haiti\\apHaiti\\haitiValidadeCRNM.html'));
     })
+    router.get('/HaitiDados',function(req,res){
+        res.sendFile(path.join(__dirname+'/haiti\\arHaiti\\haitiNomeFiliacao.html'));
+    })
+    router.get('/HaitiDados2',function(req,res){
+        res.sendFile(path.join(__dirname+'/haiti\\apHaiti\\haitiDocVencido\\haitiDados2.html'));
+    })
+    router.get('/HaitiDados3',function(req,res){
+        res.sendFile(path.join(__dirname+'/haiti\\apHaiti\\haitiDocValido\\haitiDados3.html'));
+    })
+    router.get('/HaitiContatarPF',function(req,res){
+        res.sendFile(path.join(__dirname+'/haiti\\apHaiti\\haitiDocVencido\\haitiContatarPF.html'));
+    })
+    router.get('/HaitiFinal1',function(req,res){
+        res.sendFile(path.join(__dirname+'/haiti\\arHaiti\\haitiFInal1.html'));
+    })
+    router.get('/HaitiFinal2',function(req,res){
+        res.sendFile(path.join(__dirname+'/haiti\\apHaiti\\haitiDocVencido\\haitiFinal2.html'));
+    })
+    router.get('/HaitiFinal3',function(req,res){
+        res.sendFile(path.join(__dirname+'/haiti\\apHaiti\\haitiDocValido\\haitiFinal3.html'));
+    })
 // FIM HAITI
 
 //documento
