@@ -9,42 +9,27 @@ const router = express.Router();
 const mime = require('mime');
 
 
+//Código necessário para o nodejs servir os arquivos estáticos do bootstrap
+app.use('/styles', (req, res, next) => {
+    res.header('Content-Type', 'text/css');
+    next();
+  }, express.static(path.join(__dirname, 'styles')));
+app.use('/css', express.static(path.join(__dirname,'styles/css')))
 
-const mysql = require('mysql');
+app.use('/scripts', (req, res, next) => {
+    res.header('Content-Type', 'text/js');
+    next();
+  }, express.static(path.join(__dirname, 'scripts')));
+app.use('/js', express.static(path.join(__dirname,'scripts/js')))
 
-// Configuração do MySQL
-const connection = mysql.createConnection({
-    host: 'localhost', // ou o IP do seu host Docker, dependendo do seu ambiente
-    user: 'user',
-    password: '4321',
-    database: 'ImigrantesDados',
-    port: '3306' // Porta exposta no contêiner
-});
+const phpExpress = require('php-express')();
+// Configuração do PHP
+app.engine('php', phpExpress.engine);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'php');
 
-// Conectar ao MySQL
-connection.connect((err) => {
-    if (err) {
-        console.error('Erro ao conectar ao MySQL:', err);
-        return;
-    }
-
-    console.log('Conectado ao MySQL!');
-
-    // Comando SQL para criar o banco de dados
-    const createDatabaseQuery = 'CREATE DATABASE IF NOT EXISTS ImigrantesDados';
-
-    // Executar o comando SQL para criar o banco de dados
-    connection.query(createDatabaseQuery, (err, result) => {
-        if (err) {
-            console.error('Erro ao criar o banco de dados:', err);
-        } else {
-            console.log('Banco de dados criado com sucesso!');
-        }
-
-        // Fechar a conexão após a execução do comando
-        connection.end();
-    });
-});
+// Middleware para manipular solicitações PHP
+app.all(/.+\.php$/, phpExpress.router);
 
 
 router.get('/',function(req,res){
@@ -97,18 +82,15 @@ router.get('/sobre',function(req,res){
     res.sendFile(path.join(__dirname+'/sobre.html'));
 })
 
-router.get('/styles/nacionalidade.css', function(req, res) {
-    res.setHeader('Content-Type', 'text/css');
-    res.sendFile(path.join(__dirname + '/styles/nacionalidade.css'));
-  });
-
-router.get('/scripts/nacionalidade.js', function(req, res) {
-    res.setHeader('Content-Type', 'text/js');
-    res.sendFile(path.join(__dirname + '/scripts/nacionalidade.js'));
-  });
-
 
 app.use('/', router);
+
+
+// Conectando ao banco de dados (arquivo conectando.js)
+const conectando = require('./scripts/conectando.js');
+conectando.conectar();
+
+
 
 app.listen(process.env.port || 3000);
 
